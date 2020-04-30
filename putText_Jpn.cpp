@@ -18,7 +18,7 @@
 //
 namespace
 {
-	const TCHAR *P_STR_DEF_FONTNAME = TEXT("ÇlÇr ÉSÉVÉbÉN");
+	const TCHAR* P_STR_DEF_FONTNAME = TEXT("ÇlÇr ÉSÉVÉbÉN");
 	const unsigned char THRESH_MOJI = 0xFF;
 	const unsigned char BACK_COLOR = 0xFF;
 
@@ -59,7 +59,7 @@ static HBITMAP sttc_CreateBackbuffer(int nWidth, int nHeight)
 }
 
 // â°èëÇ´
-static int sttc_DrawText_Horizontal(cv::Mat &a_r_img_dst, const BITMAP* a_p_bmp, int a_pos_x, int a_pos_y, cv::Scalar a_font_color)
+static int sttc_DrawText_Horizontal(cv::Mat& a_r_img_dst, const BITMAP* a_p_bmp, int a_pos_x, int a_pos_y, cv::Scalar a_font_color)
 {
 	int result = 0;
 	int attach_width, attach_height, attach_bit, attach_linesize;
@@ -79,7 +79,7 @@ static int sttc_DrawText_Horizontal(cv::Mat &a_r_img_dst, const BITMAP* a_p_bmp,
 	g08 = static_cast<unsigned char>(a_font_color.val[COL_ID_G]);
 	b08 = static_cast<unsigned char>(a_font_color.val[COL_ID_B]);
 
-	unsigned char *p_attach_img, *p_dst_img;
+	unsigned char* p_attach_img, * p_dst_img;
 	int x, y;
 
 	for (y = 0; y < attach_height; y++)
@@ -87,7 +87,7 @@ static int sttc_DrawText_Horizontal(cv::Mat &a_r_img_dst, const BITMAP* a_p_bmp,
 		if (a_pos_y + y >= 0 && a_pos_y + y < dst_height)
 		{
 			p_dst_img = a_r_img_dst.data + 3 * a_pos_x + (a_pos_y + y) * dst_linesize;
-			p_attach_img = static_cast<unsigned char *>(a_p_bmp->bmBits) + (attach_height - y - 1) * attach_linesize;
+			p_attach_img = static_cast<unsigned char*>(a_p_bmp->bmBits) + (attach_height - y - 1) * attach_linesize;
 			for (x = 0; x < attach_width; x++)
 			{
 				if (x + a_pos_x >= dst_width)
@@ -121,7 +121,7 @@ static int sttc_DrawText_Horizontal(cv::Mat &a_r_img_dst, const BITMAP* a_p_bmp,
 
 
 //
-static void sttc_putTextCore(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Point a_pos_org, const TCHAR *a_p_fontname, double a_font_scale, cv::Scalar a_font_color, int a_thickness, int a_lineType)
+static void sttc_putTextCore(cv::Mat& a_r_img_dst, const TCHAR* a_p_text, cv::Point a_pos_org, const TCHAR* a_p_fontname, double a_font_scale, cv::Scalar a_font_color, int a_thickness, int a_lineType)
 {
 	// ñ¢égóp
 	UNREFERENCED_PARAMETER(a_lineType);
@@ -158,7 +158,7 @@ static void sttc_putTextCore(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Po
 		SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS,
 		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		VARIABLE_PITCH | FF_ROMAN, a_p_fontname
-		);
+	);
 	hFont_old = reinterpret_cast<HFONT>(::SelectObject(hdc_Compatible, hFont));
 	::SetTextColor(hdc_Compatible, RGB(0, 0, 0));
 
@@ -183,6 +183,7 @@ static void sttc_putTextCore(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Po
 	::SelectObject(hdc_Compatible, hFont_old);
 	::SelectObject(hdc_Compatible, hbmpPrev);
 	::DeleteObject(hbmp);
+	::DeleteObject(hFont);
 	::DeleteDC(hdc_Compatible);
 
 	return;
@@ -195,7 +196,7 @@ static void sttc_putTextCore(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Po
 /////////////////////////////////////////////////////////////////////////////////////
 
 //
-void sc::myCV::putText_Jpn(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Point a_pos_org, const TCHAR *a_p_fontname, double a_font_scale, cv::Scalar a_font_color, int a_thickness, int a_lineType)
+void sc::myCV::putText_Jpn(cv::Mat& a_r_img_dst, const TCHAR* a_p_text, cv::Point a_pos_org, const TCHAR* a_p_fontname, double a_font_scale, cv::Scalar a_font_color, int a_thickness, int a_lineType)
 {
 	// a_r_img_dstÇ™ãÛÇ≈ÇÕÇ»Ç¢
 	if (!a_r_img_dst.empty())
@@ -208,9 +209,9 @@ void sc::myCV::putText_Jpn(cv::Mat &a_r_img_dst, const TCHAR *a_p_text, cv::Poin
 			str_size = ::lstrlen(a_p_text);
 
 			// ì¸óÕï∂éöóÒÇÃí∑Ç≥Ç™0ÇÊÇËëÂÇ´Ç¢
-			if ( str_size > 0)
+			if (str_size > 0)
 			{
-				const TCHAR *p_current_fontname = P_STR_DEF_FONTNAME;
+				const TCHAR* p_current_fontname = P_STR_DEF_FONTNAME;
 				if (a_p_fontname)
 				{
 					p_current_fontname = a_p_fontname;
