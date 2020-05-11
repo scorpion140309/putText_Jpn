@@ -68,11 +68,11 @@ static int sttc_DrawText_Horizontal(cv::Mat& a_r_img_dst, const BITMAP* a_p_bmp,
 	attach_width = a_p_bmp->bmWidth;
 	attach_height = a_p_bmp->bmHeight;
 	attach_bit = a_p_bmp->bmBitsPixel;
-	attach_linesize = ((attach_bit / 8) * a_p_bmp->bmWidth) & ~3;
+	attach_linesize = ((attach_bit / 8) * a_p_bmp->bmWidth + 3) & ~3;
 
 	dst_width = a_r_img_dst.cols;
 	dst_height = a_r_img_dst.rows;
-	dst_linesize = ((a_p_bmp->bmBitsPixel / 8) * a_r_img_dst.cols) & ~3;
+	dst_linesize = static_cast<int>(a_r_img_dst.step);
 
 	unsigned char r08, g08, b08;
 	r08 = static_cast<unsigned char>(a_font_color.val[COL_ID_R]);

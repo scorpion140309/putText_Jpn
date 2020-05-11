@@ -14,9 +14,7 @@ int main(int, char**)
 {
 	int result = -1;
 
-	cv::Mat tmp_img(480, 640, CV_8UC3, cv::Scalar(64, 64, 64));
-	//cv::Mat tmp_img(480, 640, CV_8UC3, cv::Scalar(255, 255, 0));
-	//tmp_img = cv::imread("sample.jpg");
+	cv::Mat tmp_img(480, 450, CV_8UC3, cv::Scalar(64, 64, 64));
 
 	if (!tmp_img.empty())
 	{
